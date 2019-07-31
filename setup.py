@@ -14,9 +14,10 @@ def main():
     setup(name         = 'robotframework-mongodblibrary',
           version      = VERSION,
           description  = 'Mongo Database utility library for Robot Framework',
-          author       = 'Jerry Schneider',
-          author_email = 'jerry@cyverse.org',
-          url          = 'https://github.com/iPlantCollaborativeOpenSource/Robotframework-MongoDB-Library',
+          author       = 'Akkharaphon Tangpaopong',
+          author_email = 'akkharaphon.tpp@gmail.com',
+          url          = 'https://github.com/robotframework-thailand/robotframework-mongodblibrary',
+          keywords = ['mongodb', 'robotframework'],
           package_dir  = { '' : 'src'},
           packages     = ['MongoDBLibrary']
           )

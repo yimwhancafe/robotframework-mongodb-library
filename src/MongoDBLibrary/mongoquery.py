@@ -1,7 +1,7 @@
 import json
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
-
+import logging
 
 class MongoQuery(object):
     """
@@ -19,7 +19,7 @@ class MongoQuery(object):
         | Should Contain | ${allDBs} | DBName |
         """
         allDBs = self._dbconnection.database_names()
-        print "| @{allDBs} | Get Mongodb Databases |"
+        logging.debug("| @{allDBs} | Get Mongodb Databases |")
         return allDBs
 
     def get_mongodb_collections(self, dbName):
@@ -38,7 +38,7 @@ class MongoQuery(object):
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         allCollections = db.collection_names()
-        print "| @{allCollections} | Get MongoDB Collections | %s |" % dbName
+        logging.debug("| @{allCollections} | Get MongoDB Collections | %s |" % dbName)
         return allCollections
 
     def drop_mongodb_database(self, dbDelName):
@@ -52,7 +52,7 @@ class MongoQuery(object):
         | Should Not Contain | ${allDBs} | myDB |
         """
         dbDelName = str(dbDelName)
-        print "| Drop MongoDB Database | %s |" % dbDelName
+        logging.debug("| Drop MongoDB Database | %s |" % dbDelName)
         try:
             self._dbconnection.drop_database('%s' % dbDelName)
         except TypeError:
@@ -74,7 +74,7 @@ class MongoQuery(object):
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         db.drop_collection('%s' % dbCollName)
-        print "| Drop MongoDB Collection | %s | %s |" % (dbName, dbCollName)
+        logging.debug("| Drop MongoDB Collection | %s | %s |" % (dbName, dbCollName))
 
     def validate_mongodb_collection(self, dbName, dbCollName):
         """
@@ -92,7 +92,7 @@ class MongoQuery(object):
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         allResults = db.validate_collection('%s' % dbCollName)
-        print "| ${allResults} | Validate MongoDB Collection | %s | %s |" % (dbName, dbCollName)
+        logging.debug("| ${allResults} | Validate MongoDB Collection | %s | %s |" % (dbName, dbCollName))
         return allResults
 
     def get_mongodb_collection_count(self, dbName, dbCollName):
@@ -111,7 +111,7 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
         count = coll.count()
-        print "| ${allResults} | Get MongoDB Collection Count | %s | %s |" % (dbName, dbCollName)
+        logging.debug("| ${allResults} | Get MongoDB Collection Count | %s | %s |" % (dbName, dbCollName))
         return count
 
     def save_mongodb_records(self, dbName, dbCollName, recordJSON):
@@ -143,7 +143,7 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
         allResults = coll.save(recordJSON)
-        print "| ${allResults} | Save MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON)
+        logging.debug("| ${allResults} | Save MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON))
         return allResults
 
     def update_many_mongodb_records(self, dbName, dbCollName, queryJSON, updateJSON, upsert=False):
@@ -169,9 +169,9 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % collection_name]
         allResults = coll.update_many(query_json, update_json, upsert=upsert)
-        print "Matched: %i documents" % allResults.matched_count
-        print "| ${allResults} | Update Many MongoDB Records | %s | %s | %s | %s |" % (
-            dbName, dbCollName, query_json, update_json)
+        logging.debug("Matched: %i documents" % allResults.matched_count)
+        logging.debug("| ${allResults} | Update Many MongoDB Records | %s | %s | %s | %s |" % (
+            dbName, dbCollName, query_json, update_json))
         return allResults.modified_count
 
     def retrieve_all_mongodb_records(self, dbName, dbCollName, returnDocuments=False):
@@ -199,7 +199,7 @@ class MongoQuery(object):
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        print "| ${allResults} | Retrieve Some MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON)
+        logging.debug("| ${allResults} | Retrieve Some MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON))
         return self._retrieve_mongodb_records(dbName, dbCollName, recordJSON, returnDocuments=returnDocuments)
 
     def retrieve_and_update_one_mongodb_record(self, dbName, dbCollName, queryJSON, updateJSON,
@@ -228,12 +228,12 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbcollname]
         all_results = coll.find_one_and_update(record_json, update_json, return_document=document_to_return)
-        print "| ${allResults} | Retrieve And Update One Mongodb Record | %s | %s | %s | %s | %s" % (
+        logging.debug("| ${allResults} | Retrieve And Update One Mongodb Record | %s | %s | %s | %s | %s" % (
             dbname,
             dbcollname,
             queryJSON,
             updateJSON,
-            returnBeforeDocument)
+            returnBeforeDocument))
         return all_results
 
     def retrieve_mongodb_records_with_desired_fields(self, dbName, dbCollName, recordJSON, fields, return__id=True,
@@ -304,8 +304,8 @@ class MongoQuery(object):
         else:
             data = []
 
-        print "| ${allResults} | retreive_mongodb_records_with_desired_fields | %s | %s | %s | %s | %s |" % (
-            dbName, dbCollName, recordJSON, fields, return__id)
+        logging.debug("| ${allResults} | retreive_mongodb_records_with_desired_fields | %s | %s | %s | %s | %s |" % (
+            dbName, dbCollName, recordJSON, fields, return__id))
         return self._retrieve_mongodb_records(dbName, dbCollName, recordJSON, data, returnDocuments)
 
     def _retrieve_mongodb_records(self, dbName, dbCollName, recordJSON, fields=[], returnDocuments=False):
@@ -359,5 +359,5 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
         allResults = coll.remove(recordJSON)
-        print "| ${allResults} | Remove MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON)
+        logging.debug("| ${allResults} | Remove MongoDB Records | %s | %s | %s |" % (dbName, dbCollName, recordJSON))
         return allResults

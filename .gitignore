@@ -10,3 +10,5 @@ log.html
 *.sublime-project
 *.sublime-workspace
 
+.pypirc
+venv
