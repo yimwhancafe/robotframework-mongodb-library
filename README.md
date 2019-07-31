@@ -18,13 +18,16 @@ sudo python setup.py install
 '''
 
 
-$ pip install -U setuptools wheel 
-$ python setup.py sdist bdist_wheel 
+$ pip install -U setuptools wheel
+ 
+$ python setup.py sdist bdist_wheel
+ 
 $ pip install twine 
 
 $ python3 setup.py sdist bdist_wheel
 
 chmod 600 ~/.pypirc
 
-twine upload --repository testpypi dist/* 
+twine upload --repository testpypi dist/*
+ 
 twine upload --repository pypi dist/* 
