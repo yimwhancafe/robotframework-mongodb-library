@@ -50,7 +50,7 @@ clean-test: ## remove test and coverage artifacts
 test: ## run tests quickly with the default Python
 		python setup.py test
 
-#coverage: ## check code coverage quickly with the default Python
+coverage: ## check code coverage quickly with the default Python
 #		coverage run --source JSONLibrary setup.py test
 #		coverage report -m
 #		coverage html
