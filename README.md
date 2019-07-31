@@ -17,6 +17,10 @@ You can install by pulling down source and executing the following:
 sudo python setup.py install
 '''
 
+# Documentation
+For the detail keyword documentation. Go to this following link:
+
+https://robotframework-thailand.github.io/robotframework-mongodb-library/
 
 $ pip install -U setuptools wheel
  
