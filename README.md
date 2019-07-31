@@ -29,5 +29,5 @@ $ python3 setup.py sdist bdist_wheel
 chmod 600 ~/.pypirc
 
 twine upload --repository testpypi dist/*
- 
-twine upload --repository pypi dist/* 
+
+twine upload --repository pypi dist/*
