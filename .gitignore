@@ -1,4 +1,5 @@
 build/
+dist/
 *.pyc
 *.class
 .idea
@@ -9,6 +10,7 @@ output.xml
 log.html
 *.sublime-project
 *.sublime-workspace
+src/*.egg-info/
 
 .pypirc
 venv
