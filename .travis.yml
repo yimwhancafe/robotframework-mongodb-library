@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+install: "pip install -r requirements.txt"
+script: make clean coverage docs dist
+deploy:
+  provider: pypi
+  user: wichy13
+  password:
+    secure: IhDvqH3Bnp6rU+big2kmSxWBaQAIoVNHc6kKxcCRG1yFd3fYPstwNQOAcOvJj6JvGCSOb9sV2PduotJyRZHJ3BENwNdnZj3gvnHdfg4BOvYjUMFbR9kdiTiKKIPIF8rXGy+h2aYl4qeX6bTQ4esPgfq2o8nOlauOmloDMoun732hYOwu0r/QPceP1NOUroIsBeFam1OgH/RUStA98ReY7zCQUqYqOtEto8isix5i0iIAL2UA1fS5fDF6/nt6Zr/pvqSUoSsya9Bjk+UYABdhXFDGiViEuKRlO426HnDGTTRHcj4rGUMJirLOeo6AE/533SaUCmtyks4uZEPQREnEYc2oI6KvCHt+SjNWYvh5/OpdKrjUoIQ6C/JrprYQbW397oh3Giq1YFF00sDZv/rbn1hA/HNgFkkwkCdymmg943nIL+npy9rxNQCXaga19mcJaYC9B0JpSYXyoAdgEG4CukseV6P6fcpd1fdFAlM5zA9hT6Syl8yRCj925tVZ9rV0lUfBpKkCeT3NhiF6P+D2D7+PcDuRF3p7g1s5W9++W9Ie7Q1Y5fNhBCKwzTSBItKFaAt4z1lAbgTED5OrVxh97KY7M/IYLuDQ1JZLQLX/KOABWee29+A2hB+2RuUOLib9fsr3C3xKFlp1NXIkk2al8odeBoYfhM6r+WetBVCYGOQ=
+  on:
+    tags: true
+    branch: master
+    repo: robotframework-thailand/robotframework-mongodb-library
+  distributions: "sdist bdist_wheel" # Your distributions here
