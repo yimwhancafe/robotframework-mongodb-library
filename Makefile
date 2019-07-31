@@ -50,10 +50,10 @@ clean-test: ## remove test and coverage artifacts
 test: ## run tests quickly with the default Python
 		python setup.py test
 
-coverage: ## check code coverage quickly with the default Python
-		coverage run --source JSONLibrary setup.py test
-		coverage report -m
-		coverage html
+#coverage: ## check code coverage quickly with the default Python
+#		coverage run --source JSONLibrary setup.py test
+#		coverage report -m
+#		coverage html
 
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/MongoDBLibrary.html
@@ -69,5 +69,5 @@ dist: clean ## builds source and wheel package
 	python setup.py bdist_wheel
 	ls -l dist
 
-install: clean test coverage docs ## install the package to the active Python's site-packages
+install: clean test docs ## install the package to the active Python's site-packages
 	python setup.py install
