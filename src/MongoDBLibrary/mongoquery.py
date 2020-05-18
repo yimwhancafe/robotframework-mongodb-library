@@ -355,7 +355,7 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit, returnDocuments=False):
+    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit=int, returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
@@ -378,7 +378,7 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_sort(self, dbName, dbCollName, recordJSON, fields=[], recordSort, returnDocuments=False):
+    def _retrieve_mongodb_records_sort(self, dbName, dbCollName, recordJSON, fields=[], recordSort=None, returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
