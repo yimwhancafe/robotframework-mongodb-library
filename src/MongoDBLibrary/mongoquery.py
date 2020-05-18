@@ -198,7 +198,7 @@ class MongoQuery(object):
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, recordLimit, returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, recordLimit.encode('utf-8'), returnDocuments=returnDocuments)
 
     def retrieve_all_mongodb_records_limit_sort(self, dbName, dbCollName, recordJSON, recordLimit, recordSort, returnDocuments=False):
         """
@@ -211,7 +211,7 @@ class MongoQuery(object):
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_sort(dbName, dbCollName, recordJSON, recordLimit, recordSort, returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_sort(dbName, dbCollName, recordJSON, recordLimit.encode('utf-8'), recordSort.encode('utf-8'), returnDocuments=returnDocuments)
 
     def retrieve_some_mongodb_records(self, dbName, dbCollName, recordJSON, returnDocuments=False):
         """
