@@ -11,5 +11,5 @@ deploy:
   on:
     tags: true
     branch: master
-    repo: robotframework-thailand/robotframework-mongodb-library
+    repo: yimwhancafe/robotframework-mongodb-library
   distributions: "sdist bdist_wheel" # Your distributions here
