@@ -187,7 +187,7 @@ class MongoQuery(object):
         """
         return self._retrieve_mongodb_records(dbName, dbCollName, '{}', returnDocuments=returnDocuments)
 
-    def retrieve_all_mongodb_records_limit(self, dbName, dbCollName, recordLimit=1, returnDocuments=False):
+    def retrieve_all_mongodb_records_limit(self, dbName, dbCollName, returnDocuments=False):
         """
         Retrieve ALL of the records in a give MongoDB database collection.
         Returned value must be single quoted for comparison, otherwise you will
@@ -198,7 +198,7 @@ class MongoQuery(object):
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_limit(dbName, dbCollName, '{}', recordLimit, returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_limit(dbName, dbCollName, '{}', returnDocuments=returnDocuments)
 
     def retrieve_some_mongodb_records(self, dbName, dbCollName, recordJSON, returnDocuments=False):
         """
@@ -342,20 +342,20 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit=1, returnDocuments=False):
+    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
-        recordLimit = int(recordLimit)
+
         try:
             db = self._dbconnection['%s' % (dbName,)]
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
         if fields:
-            results = coll.find(criteria, fields).limit(recordLimit)
+            results = coll.find(criteria, fields).limit(1)
         else:
-            results = coll.find(criteria).limit(recordLimit)
+            results = coll.find(criteria).limit(1)
         if returnDocuments:
             return list(results)
         else:
