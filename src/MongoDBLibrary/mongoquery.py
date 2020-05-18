@@ -198,7 +198,7 @@ class MongoQuery(object):
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, recordLimit.encode('utf-8'), returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, recordLimit, returnDocuments=returnDocuments)
 
     def retrieve_all_mongodb_records_limit_sort(self, dbName, dbCollName, recordJSON, recordLimit, recordSort, returnDocuments=False):
         """
@@ -355,11 +355,11 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit=None, returnDocuments=False):
+    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit=int, returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
-        recordLimit = int(recordLimit)
+
         try:
 
             db = self._dbconnection['%s' % (dbName,)]
