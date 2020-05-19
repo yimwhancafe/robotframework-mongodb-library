@@ -20,6 +20,10 @@ Credits
 
 Install
 -------
+pip Install
+
+    pip install robotframework-mongodb-library3
+
 You can install by pulling down source and executing the following:
 
     git clone https://github.com/yimwhancafe/robotframework-mongodb-library.git

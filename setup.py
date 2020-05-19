@@ -33,7 +33,7 @@ Topic :: Software Development :: Testing
 
 
 def main():
-    setuptools.setup(name='robotframework-mongodb-library',
+    setuptools.setup(name='robotframework-mongodb-library3',
                      version=VERSION,
                      description='Mongo Database utility library for Robot Framework',
                      author='Kittichai Khamdee',
