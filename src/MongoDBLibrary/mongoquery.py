@@ -361,13 +361,22 @@ class MongoQuery(object):
         criteria = dict(json.loads(recordJSON))
         recordLimit = int(recordLimit)
 
+        # Convert the fields string as a dictionary
+        if fields:
+            data = {}
+            fields = fields.replace(' ', '')
+            for item in fields.split(','):
+                data[item] = True
+        else:
+            data = []
+
         try:
             db = self._dbconnection['%s' % (dbName,)]
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
-        if fields:
-            results = coll.find(criteria, fields).limit(recordLimit)
+        if data:
+            results = coll.find(criteria, data).limit(recordLimit)
         else:
             results = coll.find(criteria).limit(recordLimit)
         if returnDocuments:
@@ -391,13 +400,22 @@ class MongoQuery(object):
         else:
             sortValue = 1
 
+        # Convert the fields string as a dictionary
+        if fields:
+            data = {}
+            fields = fields.replace(' ', '')
+            for item in fields.split(','):
+                data[item] = True
+        else:
+            data = []
+
         try:
             db = self._dbconnection['%s' % (dbName,)]
         except TypeError:
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
-        if fields:
-            results = coll.find(criteria, fields).sort(sortParam, sortValue).limit(recordLimit)
+        if data:
+            results = coll.find(criteria, data).sort(sortParam, sortValue).limit(recordLimit)
         else:
             results = coll.find(criteria).sort(sortParam, sortValue).limit(recordLimit)
         if returnDocuments:
