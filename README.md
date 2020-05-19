@@ -1,4 +1,4 @@
-Robotframework-MongoDB-Library
+Robotframework-MongoDB-Library 3.3
 ==============================
 
 A library for interacting with MongoDB from RobotFramework.
@@ -13,25 +13,12 @@ Install
 -------
 You can install by pulling down source and executing the following:
 
-'''
 sudo python setup.py install
-'''
+
+OR
+
+sudo python https://raw.githubusercontent.com/yimwhancafe/robotframework-mongodb-library/master/setup.py install
 
 # Documentation
 For the detail keyword documentation. Go to this following link:
-
-https://robotframework-thailand.github.io/robotframework-mongodb-library/
-
-$ pip install -U setuptools wheel
- 
-$ python setup.py sdist bdist_wheel
- 
-$ pip install twine 
-
-$ python3 setup.py sdist bdist_wheel
-
-chmod 600 ~/.pypirc
-
-twine upload --repository testpypi dist/*
-
-twine upload --repository pypi dist/*
+https://github.com/yimwhancafe/robotframework-mongodb-library/blob/master/test/acceptance/MongoDB-Library_Tests.txt
