@@ -4,7 +4,7 @@ A library for interacting with MongoDB from RobotFramework.
 
 Uses pymongo.
 
-Update Keyword on 3.3
+Update Keywords on 3.3
 -------
 - Retrieve All Mongodb Records Limit
 - Retrieve All Mongodb Records Limit Sort
@@ -22,10 +22,10 @@ Install
 -------
 You can install by pulling down source and executing the following:
 
-git clone https://github.com/yimwhancafe/ç.git
-cd https://github.com/yimwhancafe/robotframework-mongodb-library.git
-sudo python setup.py install
+    git clone https://github.com/yimwhancafe/robotframework-mongodb-library.git
+    cd robotframework-mongodb-library
+    sudo python setup.py install
 
 # Documentation
 For the detail keyword documentation. Go to this following link:
-https://github.com/yimwhancafe/robotframework-mongodb-library/blob/master/test/acceptance/MongoDB-Library_Tests.txt
+- https://github.com/yimwhancafe/robotframework-mongodb-library/blob/master/test/acceptance/MongoDB-Library_Tests.txt
