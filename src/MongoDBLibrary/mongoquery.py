@@ -187,31 +187,31 @@ class MongoQuery(object):
         """
         return self._retrieve_mongodb_records(dbName, dbCollName, '{}', returnDocuments=returnDocuments)
 
-    def retrieve_all_mongodb_records_limit(self, dbName, dbCollName, recordJSON, recordLimit, returnDocuments=False):
+    def retrieve_all_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields, recordLimit, returnDocuments=False):
         """
-        Retrieve ALL of the records in a give MongoDB database collection.
+        Retrieve ALL of the records limit in a give MongoDB database collection.
         Returned value must be single quoted for comparison, otherwise you will
         get a TypeError error.
 
         Usage is:
-        | ${allResults} | Retrieve All MongoDB Records Limit | DBName | CollectionName | recordJSON | recordLimit
+        | ${allResults} | Retrieve All MongoDB Records Limit | DBName | CollectionName | recordJSON | fields | recordLimit | returnDocuments=False
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, recordLimit, returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_limit(dbName, dbCollName, recordJSON, fields, recordLimit, returnDocuments=returnDocuments)
 
-    def retrieve_all_mongodb_records_limit_sort(self, dbName, dbCollName, recordJSON, sortParam, sortType, returnDocuments=False):
+    def retrieve_all_mongodb_records_limit_sort(self, dbName, dbCollName, recordJSON, fields, recordLimit, sortParam, sortType, returnDocuments=False):
         """
-        Retrieve ALL of the records in a give MongoDB database collection.
+        Retrieve ALL of the records limit and sort in a give MongoDB database collection.
         Returned value must be single quoted for comparison, otherwise you will
         get a TypeError error.
 
         Usage is:
-        | ${allResults} | Retrieve All MongoDB Records Limit | DBName | CollectionName | recordJSON | sortParam | sortType
+        | ${allResults} | Retrieve All MongoDB Records Limit | DBName | CollectionName | recordJSON | fields | recordLimit | sortParam | sortType
         | Log | ${allResults} |
         | Should Contain X Times | ${allResults} | '${recordNo1}' | 1 |
         """
-        return self._retrieve_mongodb_records_sort(dbName, dbCollName, recordJSON, sortParam, sortType, returnDocuments=returnDocuments)
+        return self._retrieve_mongodb_records_sort(dbName, dbCollName, recordJSON, fields, recordLimit, sortParam, sortType, returnDocuments=returnDocuments)
 
     def retrieve_some_mongodb_records(self, dbName, dbCollName, recordJSON, returnDocuments=False):
         """
@@ -355,10 +355,11 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields=[], recordLimit=1, returnDocuments=False):
+    def _retrieve_mongodb_records_limit(self, dbName, dbCollName, recordJSON, fields, recordLimit, returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
+        recordLimit = int(recordLimit)
 
         try:
             db = self._dbconnection['%s' % (dbName,)]
@@ -377,10 +378,11 @@ class MongoQuery(object):
                 response = '%s%s' % (response, d.items())
             return response
 
-    def _retrieve_mongodb_records_sort(self, dbName, dbCollName, recordJSON, fields=[], sortParam=None, sortType=None, returnDocuments=False):
+    def _retrieve_mongodb_records_sort(self, dbName, dbCollName, recordJSON, fields, recordLimit, sortParam=None, sortType=None, returnDocuments=False):
         dbName = str(dbName)
         dbCollName = str(dbCollName)
         criteria = dict(json.loads(recordJSON))
+        recordLimit = int(recordLimit)
         sortParam = str(sortParam)
         sortType = str(sortType)
 
@@ -395,9 +397,9 @@ class MongoQuery(object):
             self._builtin.fail("Connection failed, please make sure you have run 'Connect To Mongodb' first.")
         coll = db['%s' % dbCollName]
         if fields:
-            results = coll.find(criteria, fields).sort(sortParam, sortValue)
+            results = coll.find(criteria, fields).sort(sortParam, sortValue).limit(recordLimit)
         else:
-            results = coll.find(criteria).sort(sortParam, sortValue)
+            results = coll.find(criteria).sort(sortParam, sortValue).limit(recordLimit)
         if returnDocuments:
             return list(results)
         else:
